@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include <iostream>
 #include <chrono>
 #include<thread>
 
@@ -91,6 +92,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	float lag = 0.0f;
 
 	const int desiredFPS = 60;
+
 	const float fixedTimeStep{0.02f};
 
 	while (doContinue)
@@ -103,11 +105,13 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		doContinue = input.ProcessInput();
 		while (lag >= fixedTimeStep)
 		{
+			sceneManager.FixedUpdate( fixedTimeStep );
 			lag -= fixedTimeStep;
 		}
-		sceneManager.Update();
+		sceneManager.Update( elapsedSec );
 		renderer.Render();
-		const auto sleepTime = currentTime + std::chrono::milliseconds(1000/desiredFPS) - std::chrono::high_resolution_clock::now();
+		const auto sleepTime = currentTime + std::chrono::milliseconds( 1000 / desiredFPS ) - std::chrono::high_resolution_clock::now();
+		
 		std::this_thread::sleep_for( sleepTime );
 	}
 	

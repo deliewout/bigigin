@@ -26,11 +26,19 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-void Scene::Update()
+void Scene::Update( float elapsedSec )
 {
 	for(auto& object : m_objects)
 	{
-		object->Update();
+		object->Update(elapsedSec);
+	}
+}
+
+void dae::Scene::FixedUpdate( float fixedTimeStep )
+{
+	for (auto& object : m_objects)
+	{
+		object->FixedUpdate( fixedTimeStep );
 	}
 }
 
