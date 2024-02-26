@@ -2,13 +2,14 @@
 #include <string>
 #include <memory>
 #include "GameObject.h"
+#include "Component.h"
 #include "Transform.h"
 
 namespace dae
 {
 	class Font;
 	class Texture2D;
-	class TextObject final : public GameObject
+	class TextObject : public Component
 	{
 	public:
 		void Update( float ) override;
@@ -26,7 +27,7 @@ namespace dae
 	private:
 		bool m_needsUpdate;
 		std::string m_text;
-		Transform m_transform{};
+		//Transform m_transform{};
 		std::shared_ptr<Font> m_font;
 		std::shared_ptr<Texture2D> m_textTexture;
 	};
