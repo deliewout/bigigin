@@ -3,6 +3,11 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
+dae::GameObject::GameObject()
+{
+	m_pTransform = AddComponent<Transform>();
+}
+
 dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update( float  ){}
@@ -13,7 +18,7 @@ void dae::GameObject::FixedUpdate( float )
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
+	const auto& pos = m_pTransform->GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 }
 
@@ -24,5 +29,7 @@ void dae::GameObject::SetTexture(const std::string& filename)
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_pTransform->SetPosition(x, y, 0.0f);
 }
+
+
