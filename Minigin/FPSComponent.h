@@ -7,7 +7,7 @@ namespace dae
 	public:
 		void Update(float elapesedSec ) override;
 
-		virtual ~FPSComponent() = default;
+		~FPSComponent() = default;
 		FPSComponent( const FPSComponent& other ) = delete;
 		FPSComponent& operator=( const FPSComponent& rhs ) = delete;
 		FPSComponent( FPSComponent&& other ) = delete;

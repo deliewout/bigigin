@@ -30,7 +30,7 @@ namespace dae
 		bool HasComponent();
 
 		GameObject();
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
