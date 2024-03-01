@@ -25,8 +25,8 @@ namespace dae
 		//size_t GetChildCount() const;
 		//GameObject* GetChildAt( unsigned int index ) const;
 
-		template<typename T,typename...Args>
-		T* AddComponent(Args... print);
+		template<typename T>
+		T* AddComponent();
 		template<typename T>
 		void RemoveComponent();
 		template<typename T>
@@ -56,12 +56,12 @@ namespace dae
 		
 	};
 
-	template<typename T, typename...Args>
-	inline T* GameObject::AddComponent(Args... print)
+	template<typename T>
+	inline T* GameObject::AddComponent()
 	{
 		if (HasComponent<T>() == false)
 		{
-			auto pComponent = std::make_unique<T>( std::forward<Args>( print )... );
+			auto pComponent = std::make_unique<T>();
 			pComponent->SetOwner( this );
 			T* componentPtr{ pComponent.get() };
 			
