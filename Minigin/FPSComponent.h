@@ -2,11 +2,12 @@
 #include "TextObject.h"
 namespace dae
 {
-	class FPSComponent final : public TextObject
+	class FPSComponent final : public Component
 	{
 	public:
 		void Update(float elapesedSec ) override;
 
+		FPSComponent() = default;
 		~FPSComponent() = default;
 		FPSComponent( const FPSComponent& other ) = delete;
 		FPSComponent& operator=( const FPSComponent& rhs ) = delete;

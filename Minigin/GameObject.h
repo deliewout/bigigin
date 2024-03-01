@@ -20,8 +20,13 @@ namespace dae
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
-		template<typename T>
-		T* AddComponent();
+		//void SetParent( GameObject* parent );
+		//void GetParent() const;
+		//size_t GetChildCount() const;
+		//GameObject* GetChildAt( unsigned int index ) const;
+
+		template<typename T,typename...Args>
+		T* AddComponent(Args... print);
 		template<typename T>
 		void RemoveComponent();
 		template<typename T>
@@ -45,15 +50,18 @@ namespace dae
 		std::shared_ptr<Texture2D> m_texture{};
 
 		std::vector<std::unique_ptr<Component>> m_Components;
+
+		std::unique_ptr<GameObject> m_Parent{};
+		std::unique_ptr<GameObject[]> m_Children;
 		
 	};
 
-	template<typename T>
-	inline T* GameObject::AddComponent()
+	template<typename T, typename...Args>
+	inline T* GameObject::AddComponent(Args... print)
 	{
 		if (HasComponent<T>() == false)
 		{
-			auto pComponent = std::make_unique<T>();
+			auto pComponent = std::make_unique<T>( std::forward<Args>( print )... );
 			pComponent->SetOwner( this );
 			T* componentPtr{ pComponent.get() };
 			
