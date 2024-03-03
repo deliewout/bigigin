@@ -32,8 +32,15 @@ void dae::GameObject::SetPosition(float x, float y)
 	m_pTransform->SetPosition(x, y, 0.0f);
 }
 
-//void dae::GameObject::SetParent( GameObject* parent )
-//{
-//}
+void dae::GameObject::SetParent( GameObject* pParent )
+{
+	if (pParent == nullptr || m_pParent == nullptr)
+	{
+		//GetTransform()->
+	}
+	m_pParent = pParent;
+}
+
+
 
 
