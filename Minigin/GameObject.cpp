@@ -10,7 +10,15 @@ dae::GameObject::GameObject()
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update( float  ){}
+void dae::GameObject::Update( float elapsedSec  )
+{
+	for (size_t i = 0; i < m_pComponents.size(); ++i)
+	{
+		m_pComponents[i]->Update( elapsedSec );
+	}
+		
+
+}
 
 void dae::GameObject::FixedUpdate( float )
 {
@@ -18,14 +26,14 @@ void dae::GameObject::FixedUpdate( float )
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_pTransform->GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	for (size_t i = 0; i < m_pComponents.size(); ++i)
+	{
+		m_pComponents[i]->Render();
+	}
+	//const auto& pos = m_pTransform->GetPosition();
+	//Renderer::GetInstance().RenderTexture(*m_pComponents[], pos.x, pos.y);
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
 
 void dae::GameObject::SetPosition(float x, float y)
 {

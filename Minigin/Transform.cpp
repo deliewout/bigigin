@@ -6,3 +6,8 @@ void dae::Transform::SetPosition(const float x, const float y, const float z)
 	m_position.y = y;
 	m_position.z = z;
 }
+
+//glm::vec3 dae::Transform::GetWorldPosition() const
+//{
+//	
+//}

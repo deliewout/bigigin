@@ -16,7 +16,7 @@ namespace dae
 		void Render() const override;
 
 		void SetText(const std::string& text);
-		void SetPosition(float x, float y);
+		void SetPosition(float x, float y)const;
 
 		TextObject(const std::string& text, std::shared_ptr<Font> font);
 		virtual ~TextObject() = default;

@@ -10,7 +10,7 @@ namespace dae
 
 	public:
 		
-		virtual void Update(float) {};
+		virtual void Update( float elapsedSec );
 		virtual void FixedUpdate() {};
 		virtual void Render() const {};
 
@@ -30,7 +30,11 @@ namespace dae
 		
 		GameObject* m_pOwner{};
 
+		bool m_IsOwnerSet{ false };
+
 		void SetOwner( GameObject* pOwner );
+
+
 
 
 	};

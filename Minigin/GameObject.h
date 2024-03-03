@@ -13,11 +13,10 @@ namespace dae
 	class GameObject final
 	{
 	public:
-		void Update( float );
+		void Update( float elapsedSec );
 		void FixedUpdate( float  );
 		void Render() const;
 
-		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		void SetParent( GameObject* parent );
@@ -44,10 +43,9 @@ namespace dae
 		Transform* GetTransform() { return m_pTransform; };
 
 	private:
-		//Transform m_transform{};
 		Transform* m_pTransform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		//std::shared_ptr<Texture2D> m_texture{};
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
 
