@@ -19,10 +19,12 @@ namespace dae
 
 		void SetPosition(float x, float y);
 
-		void SetParent( GameObject* parent );
+		void SetParent( GameObject* parent, bool keepWorldPosition );
 		GameObject* GetParent() const { return m_pParent; };
 		size_t GetChildCount() const { return m_pChildren.size(); };
 		GameObject* GetChildAt( unsigned int index ) const {return m_pChildren[index].get(); };
+		void RemoveChild( GameObject* pChild );
+		void AddChild( GameObject* pChild );
 
 		template<typename T>
 		T* AddComponent();

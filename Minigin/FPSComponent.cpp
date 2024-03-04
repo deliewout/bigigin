@@ -5,7 +5,7 @@ void dae::FPSComponent::Update(float elapsedSec)
 {
 	if (!m_pTextComponent)
 	{
-		//make sure this is put in initialized by next week
+		
 		m_pTextComponent=GetOwner()->GetComponent<TextObject>();
 	}
 	m_AccumulatedSec += elapsedSec;

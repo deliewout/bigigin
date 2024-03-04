@@ -48,7 +48,7 @@ void dae::TextObject::SetText(const std::string& text)
 
 void dae::TextObject::SetPosition(const float x, const float y)const
 {
-	GetTransform()->SetPosition(x, y, 0.0f);
+	GetTransform()->SetPosition(x, y);
 }
 
 

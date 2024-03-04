@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
@@ -37,18 +38,32 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_pTransform->SetPosition(x, y, 0.0f);
+	m_pTransform->SetPosition(x, y);
 }
 
-void dae::GameObject::SetParent( GameObject* pParent )
+void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 {
-	if (pParent == nullptr || m_pParent == nullptr)
+	if (pParent == m_pParent || pParent == this)
 	{
-		//GetTransform()->
+		return;
 	}
 	m_pParent = pParent;
+	keepWorldPosition = true;
+
 }
 
+void dae::GameObject::RemoveChild( GameObject* pChild )
+{
+	m_pChildren.erase( std::remove_if( m_pChildren.begin(), m_pChildren.end(), [&]( std::unique_ptr<GameObject>& pCurrentChild)
+		{
+			return pCurrentChild.get()==pChild;
+		}), m_pChildren.end());
+}
+
+void dae::GameObject::AddChild( GameObject* pChild )
+{
+	m_pChildren.emplace_back( pChild );
+}
 
 
 
