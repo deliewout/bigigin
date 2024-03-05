@@ -19,7 +19,7 @@ namespace dae
 
 		void SetTexture( std::shared_ptr<dae::Texture2D> pTexture );
 
-		void Render()const;
+		void Render( glm::vec2 pos )const;
 
 	private:
 		std::shared_ptr<dae::Texture2D> m_pTexture2D{};

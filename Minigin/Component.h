@@ -1,9 +1,10 @@
 #pragma once
+#include <glm/glm.hpp>
 
 namespace dae
 {
 	class GameObject;
-	class Transform;
+	//class Transform;
 
 	class Component
 	{
@@ -12,7 +13,7 @@ namespace dae
 		
 		virtual void Update( float elapsedSec );
 		virtual void FixedUpdate() {};
-		virtual void Render() const {};
+		virtual void Render(glm::vec2) const {};
 
 		virtual ~Component()= default;
 		Component( const Component& other ) = delete;
@@ -21,9 +22,9 @@ namespace dae
 		Component& operator=( Component&& rhs ) = delete;
 
 		
-		Transform* GetTransform() const;
+		//Transform* GetTransform() const;
 	protected:
-		Component() = default;
+		Component( GameObject* pOwner ) : m_pOwner{ pOwner } {} /*= default*/;
 		GameObject* GetOwner() const;
 	private:
 		friend class GameObject;
@@ -32,11 +33,7 @@ namespace dae
 
 		bool m_IsOwnerSet{ false };
 
-		void SetOwner( GameObject* pOwner );
-
-
-
-
+		//void SetOwner( GameObject* pOwner );
 	};
 }
 

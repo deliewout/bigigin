@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-void dae::Transform::SetPosition(const float x, const float y/*, const float z*/)
+void dae::Transform::SetPosition(float x,float y/*, const float z*/)
 {
 	m_position.x = x;
 	m_position.y = y;
@@ -12,7 +12,7 @@ void dae::Transform::SetLocalPosition( const glm::vec2& Pos )
 	m_position = Pos;
 }
 
-//glm::vec3 dae::Transform::GetWorldPosition() const
+//glm::vec dae::Transform::GetWorldPosition() const
 //{
 //	
 //}

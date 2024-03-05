@@ -4,10 +4,16 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
+#include "Transform.h"
 
-dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
-{ }
+
+dae::TextObject::TextObject( GameObject* pOwner )
+	:dae::Component{pOwner}, m_needsUpdate( true )
+{
+}
+//dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
+//	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
+//{ }
 
 void dae::TextObject::Update( float  )
 {
@@ -30,11 +36,13 @@ void dae::TextObject::Update( float  )
 	}
 }
 
-void dae::TextObject::Render() const
+
+
+void dae::TextObject::Render( glm::vec2 pos ) const
 {
 	if (m_textTexture != nullptr)
 	{
-		const auto& pos = GetTransform()->GetPosition();
+		//const auto& pos = m_transform.GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
 	}
 }
@@ -46,9 +54,16 @@ void dae::TextObject::SetText(const std::string& text)
 	m_needsUpdate = true;
 }
 
-void dae::TextObject::SetPosition(const float x, const float y)const
+void dae::TextObject::SetFont( std::shared_ptr<dae::Font> font )
 {
-	GetTransform()->SetPosition(x, y);
+	m_font = std::move( font );
 }
+
+void dae::TextObject::SetPosition(const float x, const float y)
+{
+	m_transform.SetPosition(x, y);
+}
+
+
 
 

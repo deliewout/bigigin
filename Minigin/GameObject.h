@@ -35,6 +35,8 @@ namespace dae
 		template<typename T>
 		bool HasComponent();
 
+
+
 		GameObject();
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -42,10 +44,10 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-		Transform* GetTransform() { return m_pTransform; };
+		Transform GetTransform() { return m_pTransform; };
 
 	private:
-		Transform* m_pTransform{};
+		Transform m_pTransform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
 		//std::shared_ptr<Texture2D> m_texture{};
 
@@ -57,24 +59,24 @@ namespace dae
 	};
 
 	template<typename T>
-	inline T* GameObject::AddComponent()
+	T* GameObject::AddComponent()
 	{
 		if (HasComponent<T>() == false)
 		{
-			auto pComponent = std::make_unique<T>();
-			pComponent->SetOwner( this );
-			T* componentPtr{ pComponent.get() };
-			
-			m_pComponents.push_back( std::move(pComponent) );
-			
+			auto pComponent = std::make_unique<T>( this );
 
-			return componentPtr;
+
+
+			m_pComponents.emplace_back( std::move( pComponent ) );
+
+
+			return  dynamic_cast<T*>(m_pComponents.back().get());
 		}
 		return nullptr;
 	}
 
 	template<typename T>
-	inline void dae::GameObject::RemoveComponent()
+	void GameObject::RemoveComponent()
 	{
 		for (auto it = m_pComponents.begin(); it > m_pComponents.end(); ++it)
 		{
@@ -100,8 +102,8 @@ namespace dae
 	}
 
 	template<typename T>
-	inline bool dae::GameObject::HasComponent()
+	inline bool GameObject::HasComponent()
 	{
-		return GetComponent<T>()!=nullptr;
+		return GetComponent<T>() != nullptr;
 	}
 }

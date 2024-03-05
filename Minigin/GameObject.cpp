@@ -6,7 +6,7 @@
 
 dae::GameObject::GameObject()
 {
-	m_pTransform = AddComponent<Transform>();
+	//m_pTransform = AddComponent<Transform>();
 }
 
 dae::GameObject::~GameObject() = default;
@@ -29,7 +29,8 @@ void dae::GameObject::Render() const
 {
 	for (size_t i = 0; i < m_pComponents.size(); ++i)
 	{
-		m_pComponents[i]->Render();
+		m_pComponents[i]->Render(m_pTransform.GetPosition());
+
 	}
 	//const auto& pos = m_pTransform->GetPosition();
 	//Renderer::GetInstance().RenderTexture(*m_pComponents[], pos.x, pos.y);
@@ -38,7 +39,7 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_pTransform->SetPosition(x, y);
+	m_pTransform.SetPosition(x, y);
 }
 
 void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
