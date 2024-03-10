@@ -89,7 +89,7 @@ namespace dae
 	}
 
 	template<typename T>
-	inline T* GameObject::GetComponent()
+	T* GameObject::GetComponent()
 	{
 		for (const auto& ptr : m_pComponents)
 		{
@@ -102,7 +102,7 @@ namespace dae
 	}
 
 	template<typename T>
-	inline bool GameObject::HasComponent()
+	bool GameObject::HasComponent()
 	{
 		return GetComponent<T>() != nullptr;
 	}

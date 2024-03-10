@@ -12,7 +12,7 @@ void dae::Transform::SetLocalPosition( const glm::vec2& Pos )
 	m_position = Pos;
 }
 
-//glm::vec dae::Transform::GetWorldPosition() const
-//{
-//	
-//}
+glm::vec2 dae::Transform::GetWorldPosition() const
+{
+	return m_position;
+}

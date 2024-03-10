@@ -48,8 +48,19 @@ void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 	{
 		return;
 	}
-	m_pParent = pParent;
-	keepWorldPosition = true;
+	if (pParent == nullptr)
+	{
+
+	}
+	else 
+	{
+		if(keepWorldPosition)
+		if (m_pParent)m_pParent->RemoveChild( this );
+		m_pParent = pParent;
+		if (m_pParent)m_pParent->AddChild( this );
+	}
+
+
 
 }
 
@@ -59,6 +70,7 @@ void dae::GameObject::RemoveChild( GameObject* pChild )
 		{
 			return pCurrentChild.get()==pChild;
 		}), m_pChildren.end());
+	pChild->m_pParent = nullptr;
 }
 
 void dae::GameObject::AddChild( GameObject* pChild )
