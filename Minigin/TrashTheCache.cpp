@@ -2,6 +2,7 @@
 #include <chrono>
 #include <algorithm>
 #include <numeric>
+#include "imgui.h"
 #include "imgui_plot.h"
 
 void dae::TrashTheCache::Render()
@@ -35,7 +36,7 @@ void dae::TrashTheCache::ExcerciseInt()
 		for (int currentSample{ 0 }; currentSample < m_IntSampleAmount; ++currentSample)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < buffer.size(); i += stepsize)
+			for (size_t i = 0; i < buffer.size(); i += stepsize)
 			{
 				buffer[i] *= 2;
 			}
@@ -62,7 +63,7 @@ void dae::TrashTheCache::ExcerciseGO3D()
 		for (int currentSample{ 0 }; currentSample < m_GO3DSampleAmount; ++currentSample)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < buffer.size(); i += stepsize)
+			for (size_t i = 0; i < buffer.size(); i += stepsize)
 			{
 				buffer[i].id *= 2;
 			}
@@ -88,7 +89,7 @@ void dae::TrashTheCache::ExcerciseGO3DAlt()
 		for (int currentSample{ 0 }; currentSample < m_GO3DAltSampleAmount; ++currentSample)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < buffer.size(); i += stepsize)
+			for (size_t i = 0; i < buffer.size(); i += stepsize)
 			{
 				buffer[i].id *= 2;
 			}
