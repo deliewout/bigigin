@@ -5,6 +5,8 @@
 #include "imgui.h"
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_OpenGL3.h>
+#include "implot.h"
+#include"TrashTheCache.h"
 
 
 int GetOpenGLDriverIndex()
@@ -29,8 +31,10 @@ void dae::Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+	
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImPlot::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL( window, SDL_GL_GetCurrentContext() );
 	ImGui_ImplOpenGL3_Init();
 }
@@ -46,7 +50,10 @@ void dae::Renderer::Render() const
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
-	ImGui::ShowDemoWindow();
+	//dae::TrashTheCache render{ dae::TrashTheCache() };
+	//m_Render;
+	TrashTheCache::GetInstance().Render();
+	//ImGui::ShowDemoWindow();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
@@ -57,6 +64,7 @@ void dae::Renderer::Destroy()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	ImPlot::DestroyContext();
 	ImGui::DestroyContext();
 	if (m_renderer != nullptr)
 	{

@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
+#include "Singleton.h"
 
 
 namespace dae
 {
-	class TrashTheCache final
+	class TrashTheCache final: public Singleton<TrashTheCache>
 	{
 	public:
 		TrashTheCache() = default;

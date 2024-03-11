@@ -3,24 +3,91 @@
 #include <algorithm>
 #include <numeric>
 #include "imgui.h"
-#include "imgui_plot.h"
+#include "implot.h"
 
 void dae::TrashTheCache::Render()
 {
-	//RenderEx1();
+	RenderEx1();
+	RenderEx2();
 }
 
 void dae::TrashTheCache::RenderEx1()
 {
+
 	if (!ImGui::Begin( "Excercise1" ))
 	{
 		ImGui::End();
 		return;
 	}
+
+
+	ImGui::InputInt( "samples", &m_IntSampleAmount );
+
+	if (ImGui::Button( "Trash The Cache" ))
+	{
+		ExcerciseInt();
+	}
+	if (!m_IntSamples.empty())
+	{
+		if (ImPlot::BeginPlot( "##" )) {
+			ImPlot::PlotLine( "", m_IntSamples.data(),static_cast<int>(m_IntSamples.size()));
+			ImPlot::EndPlot();
+		}
+			
+	}
+	ImGui::End();
+
 }
 
 void dae::TrashTheCache::RenderEx2()
 {
+	if (!ImGui::Begin( "Exercise 2" ))
+	{
+		// Early out if the window is collapsed, as an optimization.
+		ImGui::End();
+		return;
+	}
+
+	ImGui::InputInt( "samples", &m_GO3DSampleAmount );
+
+	if (ImGui::Button( "Trash the cache with GameObject3D" ))
+	{
+		ExcerciseGO3D();
+	}
+
+	if (!m_GO3DSamples.empty())
+	{
+		if (ImPlot::BeginPlot( "##" )) {
+			ImPlot::PlotLine( "", m_GO3DSamples.data(), static_cast<int>(m_GO3DSamples.size()) );
+			ImPlot::EndPlot();
+		}
+	}
+
+	if (ImGui::Button( "Trash the cache with GameObject3DAlt" ))
+	{
+		ExcerciseGO3DAlt();
+	}
+
+	if (!m_GO3DAltSamples.empty())
+	{
+		if (ImPlot::BeginPlot( "##" )) {
+			ImPlot::PlotLine( "", m_GO3DAltSamples.data(), static_cast<int>(m_GO3DAltSamples.size()) );
+			ImPlot::EndPlot();
+		}
+	}
+
+	if (!m_GO3DSamples.empty() && !m_GO3DAltSamples.empty())
+	{
+		if (ImPlot::BeginPlot( "##" )) {
+			ImPlot::PlotLine( "", m_GO3DSamples.data(), static_cast<int>(m_GO3DSamples.size()) );
+			ImPlot::SetNextLineStyle( ImVec4( 1, 1, 0, 1 ) );
+			ImPlot::PlotLine( "", m_GO3DAltSamples.data(), static_cast<int>(m_GO3DAltSamples.size()) );
+
+			ImPlot::EndPlot();
+		}
+	}
+
+	ImGui::End();
 }
 
 void dae::TrashTheCache::ExcerciseInt()
@@ -46,7 +113,7 @@ void dae::TrashTheCache::ExcerciseInt()
 		}
 		std::sort( steptimes.begin(), steptimes.end() );
 		const float avg{ std::accumulate( steptimes.begin() + 1,steptimes.end() - 1,0.0f ) / (steptimes.size() - 2) };
-		m_IntSamples.emplace_back( avg );
+		m_IntSamples.push_back( avg );
 	}
 	
 }
