@@ -10,7 +10,7 @@ namespace dae
 
 	public:
 
-		RenderComponent() = default;
+		RenderComponent( GameObject* pOwner ) ;
 		~RenderComponent() = default ;
 		RenderComponent( const RenderComponent& other ) = delete;
 		RenderComponent& operator=( const RenderComponent& rhs ) = delete;

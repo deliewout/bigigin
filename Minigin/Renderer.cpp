@@ -52,7 +52,7 @@ void dae::Renderer::Render() const
 	ImGui::NewFrame();
 	//dae::TrashTheCache render{ dae::TrashTheCache() };
 	//m_Render;
-	TrashTheCache::GetInstance().Render();
+	//TrashTheCache::GetInstance().Render();
 	//ImGui::ShowDemoWindow();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

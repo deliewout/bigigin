@@ -2,6 +2,11 @@
 #include "Transform.h"
 #include "Renderer.h"
 
+dae::RenderComponent::RenderComponent( GameObject* pOwner )
+	:dae::Component{pOwner}
+{
+}
+
 void dae::RenderComponent::SetTexture( std::shared_ptr<dae::Texture2D> pTexture )
 {
 	m_pTexture2D = pTexture;

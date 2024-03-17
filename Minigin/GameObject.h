@@ -64,11 +64,7 @@ namespace dae
 		if (HasComponent<T>() == false)
 		{
 			auto pComponent = std::make_unique<T>( this );
-
-
-
 			m_pComponents.emplace_back( std::move( pComponent ) );
-
 
 			return  dynamic_cast<T*>(m_pComponents.back().get());
 		}
