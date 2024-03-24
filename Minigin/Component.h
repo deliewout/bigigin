@@ -21,11 +21,11 @@ namespace dae
 		Component( Component&& other ) = delete;
 		Component& operator=( Component&& rhs ) = delete;
 
-		
+		GameObject* GetOwner() const;
 		//Transform* GetTransform() const;
 	protected:
 		Component( GameObject* pOwner ) : m_pOwner{ pOwner } {} /*= default*/;
-		GameObject* GetOwner() const;
+		
 	private:
 		friend class GameObject;
 		

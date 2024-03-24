@@ -23,8 +23,7 @@ namespace dae
 		GameObject* GetParent() const { return m_pParent; };
 		size_t GetChildCount() const { return m_pChildren.size(); };
 		GameObject* GetChildAt( unsigned int index ) const {return m_pChildren[index].get(); };
-		void RemoveChild( GameObject* pChild );
-		void AddChild( GameObject* pChild );
+		const std::vector<std::unique_ptr<GameObject>>& GetChildren() const { return m_pChildren; }
 
 		template<typename T>
 		T* AddComponent();
@@ -55,6 +54,9 @@ namespace dae
 
 		GameObject* m_pParent{};
 		std::vector<std::unique_ptr<GameObject>> m_pChildren;
+
+		void RemoveChild( GameObject* pChild );
+		void AddChild( GameObject* pChild );
 		
 	};
 

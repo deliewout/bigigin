@@ -50,11 +50,14 @@ void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 	}
 	if (pParent == nullptr)
 	{
-
+		m_pTransform.SetLocalPosition( m_pTransform.GetWorldPosition() );
 	}
 	else 
 	{
-		if(keepWorldPosition)
+		if (keepWorldPosition)
+		{
+			m_pTransform.SetLocalPosition( m_pTransform.GetLocalPosition() - pParent->m_pTransform.GetWorldPosition() );
+		}
 		if (m_pParent)m_pParent->RemoveChild( this );
 		m_pParent = pParent;
 		if (m_pParent)m_pParent->AddChild( this );
