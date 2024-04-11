@@ -32,6 +32,13 @@ void Scene::Update( float elapsedSec )
 	{
 		object->Update(elapsedSec);
 	}
+	//added from first week feedback
+	m_objects.erase( std::remove_if( m_objects.begin(), m_objects.end(),
+		[&]( std::shared_ptr<GameObject>& object )
+		{
+			return object->IsDestroyed();
+		}
+	), m_objects.end() );
 }
 
 void dae::Scene::FixedUpdate( float fixedTimeStep )

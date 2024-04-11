@@ -9,7 +9,15 @@ dae::GameObject::GameObject()
 	//m_pTransform = AddComponent<Transform>();
 }
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	m_GameObjectDestroyed = true;
+}
+
+bool dae::GameObject::IsDestroyed()
+{
+	return m_GameObjectDestroyed;
+}
 
 void dae::GameObject::Update( float elapsedSec  )
 {
@@ -62,9 +70,6 @@ void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 		m_pParent = pParent;
 		if (m_pParent)m_pParent->AddChild( this );
 	}
-
-
-
 }
 
 void dae::GameObject::RemoveChild( GameObject* pChild )

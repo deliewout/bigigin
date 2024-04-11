@@ -15,7 +15,7 @@ void dae::Transform::SetLocalPosition( const glm::vec2& Pos )
 void dae::Transform::SetDirtyFlag()
 {
 	m_IsDirtyFlag = true;
-	//for (auto& child : GetOwner()->GetChildren())
+	//for (const auto& child : dae::Component::GetOwner()->GetChildren())
 	//{
 
 	//}

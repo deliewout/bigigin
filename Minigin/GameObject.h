@@ -34,8 +34,6 @@ namespace dae
 		template<typename T>
 		bool HasComponent();
 
-
-
 		GameObject();
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -43,12 +41,13 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		bool IsDestroyed();
+
 		Transform GetTransform() { return m_pTransform; };
 
 	private:
 		Transform m_pTransform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		//std::shared_ptr<Texture2D> m_texture{};
+		bool m_GameObjectDestroyed{ false };
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
 
@@ -63,6 +62,7 @@ namespace dae
 	template<typename T>
 	T* GameObject::AddComponent()
 	{
+		//check if the componentsvector already has the component and if not add the new component on the vector
 		if (HasComponent<T>() == false)
 		{
 			auto pComponent = std::make_unique<T>( this );
@@ -89,6 +89,7 @@ namespace dae
 	template<typename T>
 	T* GameObject::GetComponent()
 	{
+		//loop over every component to get whatever component you want
 		for (const auto& ptr : m_pComponents)
 		{
 			if (auto pCast = dynamic_cast<T*>(ptr.get()))
@@ -98,7 +99,7 @@ namespace dae
 		}
 		return nullptr;
 	}
-
+	//just call the getcomponent template function with what component you want to check
 	template<typename T>
 	bool GameObject::HasComponent()
 	{

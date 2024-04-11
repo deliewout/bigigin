@@ -18,12 +18,3 @@ void dae::Component::Update( float /*elapsedSec*/ )
 //	return m_pOwner->GetTransform();
 //}
 
-//void dae::Component::SetOwner( GameObject* pOwner )
-//{
-//	if (!m_IsOwnerSet)
-//	{
-//		m_pOwner = pOwner;
-//		m_IsOwnerSet=true;
-//	}
-//	
-//}

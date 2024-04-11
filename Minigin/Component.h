@@ -27,13 +27,9 @@ namespace dae
 		Component( GameObject* pOwner ) : m_pOwner{ pOwner } {} /*= default*/;
 		
 	private:
-		friend class GameObject;
-		
 		GameObject* m_pOwner{};
 
 		bool m_IsOwnerSet{ false };
-
-		//void SetOwner( GameObject* pOwner );
 	};
 }
 
