@@ -1,5 +1,7 @@
 #pragma once
 #include "Singleton.h"
+#include "KeyboardInput.h"
+#include "ControllerInput.h"
 
 namespace dae
 {

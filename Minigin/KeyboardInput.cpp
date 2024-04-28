@@ -9,4 +9,9 @@ dae::KeyboardInput::KeyboardInput()
 
 void dae::KeyboardInput::Update()
 {
+	std::vector<Uint8> keyboardButtons{};
+	keyboardButtons.resize( SDL_NUM_SCANCODES );
+
+	
+
 }

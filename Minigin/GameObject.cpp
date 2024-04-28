@@ -52,10 +52,12 @@ void dae::GameObject::SetPosition(float x, float y)
 
 void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 {
+	//make sure the parent isnt the same parent or that it is not current instance
 	if (pParent == m_pParent || pParent == this)
 	{
 		return;
 	}
+	//if the parent is a nullptr set the position of the main parent
 	if (pParent == nullptr)
 	{
 		m_pTransform.SetLocalPosition( m_pTransform.GetWorldPosition() );
@@ -78,11 +80,13 @@ void dae::GameObject::RemoveChild( GameObject* pChild )
 		{
 			return pCurrentChild.get()==pChild;
 		}), m_pChildren.end());
+	//let the parent know that the child has been removed from its children list
 	pChild->m_pParent = nullptr;
 }
 
 void dae::GameObject::AddChild( GameObject* pChild )
 {
+	//add a new child at the back of the children list
 	m_pChildren.emplace_back( pChild );
 }
 
