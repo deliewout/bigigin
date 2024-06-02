@@ -3,6 +3,7 @@
 #include <backends/imgui_impl_sdl2.h>
 
 
+
 bool dae::InputManager::ProcessInput()
 {
 	//ZeroMemory( &m_CurrentState, sizeof );
@@ -24,3 +25,16 @@ bool dae::InputManager::ProcessInput()
 
 	return true;
 }
+
+void dae::InputManager::BindKeyBoardAction( SDL_Scancode Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
+{
+}
+
+void dae::InputManager::BindGamePadAction( GamepadStates Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
+{
+}
+
+void dae::InputManager::ProcessActions()
+{
+}
+
