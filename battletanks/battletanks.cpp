@@ -49,19 +49,13 @@ void LoadLevelFile()
 
 		grid.push_back( row );
 	}
-	for (const auto& row : grid) {
-		for (int type : row) {
-			std::cout << type << " ";
-		}
-		std::cout << std::endl;
-	}
 
 	file.close();
 }
 
 void test()
 {
-	//dae::ServiceLocator::RegisterSoundSystem( std::make_unique<dae::SDLSoundSystem>() );
+	dae::ServiceLocator::RegisterSoundSystem( std::make_unique<dae::SDLSoundSystem>() );
 	auto& scene = dae::SceneManager::GetInstance().CreateScene( "Demo" );
 	
 
@@ -76,6 +70,59 @@ void test()
 	auto newTexture = go->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
 	scene.Add( go );
+
+	//load the diffrent tile texture
+	auto voidTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/void.png" );
+	auto wallTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/wall.png" );
+	auto pathTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/path.png" );
+	auto teleportTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/teleport.png" );
+	
+	//load the level layout
+	LoadLevelFile();
+
+	const int blockSize = 8;
+	int startX = 0;
+	int startY = 0;
+
+	// Draw the blocks based on the grid data
+	for (size_t row = 0; row < grid.size(); ++row) {
+		for (size_t col = 0; col < grid[row].size(); ++col) {
+			go = std::make_shared<dae::GameObject>();
+			if (!go) {
+				std::cout << "Error creating game object\n";
+				continue;
+			}
+
+			auto renderComponent = go->AddComponent<dae::RenderComponent>();
+			if (!renderComponent) {
+				std::cout << "Error creating render component\n";
+				continue;
+			}
+
+			// Set the texture based on block type
+			switch (static_cast<BlockTypes>(grid[row][col])) {
+			case BlockTypes::levelvoid:
+				renderComponent->SetTexture( voidTexture );
+				break;
+			case BlockTypes::wall:
+				renderComponent->SetTexture( wallTexture );
+				break;
+			case BlockTypes::path:
+				renderComponent->SetTexture( pathTexture );
+				break;
+			case BlockTypes::teleport:
+				renderComponent->SetTexture( teleportTexture );
+				break;
+			default:
+				std::cout << "Unknown block type\n";
+				continue;
+			}
+
+			// Set the position of the block
+			go->SetPosition( startX + static_cast<float>(col) * blockSize, startY + static_cast<float>(row) * blockSize );
+			scene.Add( go );
+		}
+	}
 
 	go = std::make_shared<dae::GameObject>();
 	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "logo.tga" );
@@ -108,7 +155,32 @@ void test()
 	newTexture->SetTexture( createTexture );
 	go->SetPosition( 300, 300 );
 	scene.Add( go );
-	LoadLevelFile();
+
+	//go = std::make_shared<dae::GameObject>();
+	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/void.png" );
+	//newTexture = go->AddComponent<dae::RenderComponent>();
+	//newTexture->SetTexture( createTexture );
+	//go->SetPosition( 250, 300 );
+	//scene.Add( go );
+	//go = std::make_shared<dae::GameObject>();
+	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/wall.png" );
+	//newTexture = go->AddComponent<dae::RenderComponent>();
+	//newTexture->SetTexture( createTexture );
+	//go->SetPosition( 200, 300 );
+	//scene.Add( go );
+	//go = std::make_shared<dae::GameObject>();
+	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/path.png" );
+	//newTexture = go->AddComponent<dae::RenderComponent>();
+	//newTexture->SetTexture( createTexture );
+	//go->SetPosition( 150, 300 );
+	//scene.Add( go );
+	//go = std::make_shared<dae::GameObject>();
+	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/teleport.png" );
+	//newTexture = go->AddComponent<dae::RenderComponent>();
+	//newTexture->SetTexture( createTexture );
+	//go->SetPosition( 100, 300 );
+	//scene.Add( go );
+	//LoadLevelFile();
 }
 int main( int, char* [] ) {
 	dae::Minigin engine("../Data/");
