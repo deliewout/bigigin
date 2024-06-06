@@ -156,31 +156,6 @@ void test()
 	go->SetPosition( 300, 300 );
 	scene.Add( go );
 
-	//go = std::make_shared<dae::GameObject>();
-	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/void.png" );
-	//newTexture = go->AddComponent<dae::RenderComponent>();
-	//newTexture->SetTexture( createTexture );
-	//go->SetPosition( 250, 300 );
-	//scene.Add( go );
-	//go = std::make_shared<dae::GameObject>();
-	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/wall.png" );
-	//newTexture = go->AddComponent<dae::RenderComponent>();
-	//newTexture->SetTexture( createTexture );
-	//go->SetPosition( 200, 300 );
-	//scene.Add( go );
-	//go = std::make_shared<dae::GameObject>();
-	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/path.png" );
-	//newTexture = go->AddComponent<dae::RenderComponent>();
-	//newTexture->SetTexture( createTexture );
-	//go->SetPosition( 150, 300 );
-	//scene.Add( go );
-	//go = std::make_shared<dae::GameObject>();
-	//createTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/teleport.png" );
-	//newTexture = go->AddComponent<dae::RenderComponent>();
-	//newTexture->SetTexture( createTexture );
-	//go->SetPosition( 100, 300 );
-	//scene.Add( go );
-	//LoadLevelFile();
 }
 int main( int, char* [] ) {
 	dae::Minigin engine("../Data/");

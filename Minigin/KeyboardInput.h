@@ -21,9 +21,10 @@ namespace dae
 		bool IsButtonHeldDown( SDL_Scancode button ) { return m_Pressed[button]; };
 
 	private:
-		std::vector<Uint8> m_Down;
-		std::vector<Uint8> m_Up;
-		std::vector<Uint8> m_Pressed;
+		std::vector<int> m_Down;
+		std::vector<int> m_Up;
+		std::vector<int> m_Pressed;
+		std::vector<int> m_PreviousState;
 
 	};
 }
