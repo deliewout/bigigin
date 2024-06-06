@@ -28,10 +28,17 @@ bool dae::InputManager::ProcessInput()
 
 void dae::InputManager::BindKeyBoardAction( SDL_Scancode Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
 {
+	Button;
+	KeyState;
+	Action;
 }
 
-void dae::InputManager::BindGamePadAction( GamepadStates Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
+void dae::InputManager::BindGamePadAction( int ControllerIndex, GamepadStates Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
 {
+	ControllerIndex;
+	Button;
+	KeyState;
+	Action;
 }
 
 void dae::InputManager::ProcessActions()
