@@ -5,16 +5,16 @@ The bigigin is a small 2d game engine created in the course programming 4 in DAE
 # Patterns
 The patterns used in this engine are:
 
-Game loop
-Update method
-Component
-Dirty flag
-Command
-Observer
-Event queue
-Singleton
-Service locator
-State
+- Game loop
+- Update method
+- Component
+- Dirty flag
+- Command
+- Observer
+- Event queue
+- Singleton
+- Service locator
+- State
 
 # Development
 some things that still have to be finished developing in the engine are the inputmanager and the soundsystem(which will include multithreading for playing the sounds). pImpl might also be used for the input.
