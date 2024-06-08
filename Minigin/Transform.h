@@ -22,8 +22,10 @@ namespace dae
 
 		void SetDirtyFlag();
 	private:
-		//made it a vec2 because it currently is just a 2d engine
+		
 		GameObject* m_pParent{};
+
+		//made it a vec2 because it currently is just a 2d engine
 		glm::vec2 m_LocalPosition{};
 		glm::vec2 m_WorldPosition{};
 		bool m_IsDirtyFlag{false};

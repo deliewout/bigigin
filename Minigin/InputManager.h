@@ -43,9 +43,11 @@ namespace dae
 			pressed,
 		};
 
+		//vectors of commands depending on which input device is used
 		std::vector<dae::Command> m_KeyboardCommands;
-		std::vector<dae::Command> m_GamepadCommands;
+		std::vector<std::vector<dae::Command>> m_GamepadCommands;
 
+		//functions to bind a button press to a certain command
 		void BindKeyBoardAction(SDL_Scancode Button,  KeyStates KeyState, std::unique_ptr<dae::Command> Action );
 		void BindGamePadAction(int ControllerIndex, GamepadStates Button,  KeyStates KeyState, std::unique_ptr<dae::Command> Action );
 		void ProcessActions();
