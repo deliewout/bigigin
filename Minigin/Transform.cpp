@@ -27,10 +27,10 @@ void dae::Transform::SetTransformParent( GameObject* pParent )
 void dae::Transform::SetDirtyFlag()
 {
 	m_IsDirtyFlag = true;
-	for (const auto& child : m_pParent->GetChildren())
-	{
-		child->GetTransform()->SetDirtyFlag();
-	}
+	//for (const auto& child : m_pParent->GetChildren())
+	//{
+	//	child->GetTransform().SetDirtyFlag();
+	//}
 }
 
 glm::vec2 dae::Transform::GetWorldPosition()
@@ -50,7 +50,7 @@ void dae::Transform::UpdateWorldPos()
 		}
 		else
 		{
-			m_WorldPosition = m_pParent->GetTransform()->GetWorldPosition() + m_LocalPosition;
+			m_WorldPosition = GetWorldPosition() + m_LocalPosition;
 		}
 	}
 	m_IsDirtyFlag = false;

@@ -37,7 +37,7 @@ void dae::GameObject::Render() const
 {
 	for (size_t i = 0; i < m_pComponents.size(); ++i)
 	{
-		m_pComponents[i]->Render(m_pTransform->GetLocalPosition());
+		m_pComponents[i]->Render(m_pTransform.GetLocalPosition());
 
 	}
 	//const auto& pos = m_pTransform->GetPosition();
@@ -47,7 +47,7 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_pTransform->SetLocalPosition(x, y);
+	m_pTransform.SetLocalPosition(x, y);
 }
 
 void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
@@ -60,15 +60,15 @@ void dae::GameObject::SetParent( GameObject* pParent, bool keepWorldPosition)
 	//if the parent is a nullptr set the position of the main parent
 	if (pParent == nullptr)
 	{
-		m_pTransform->SetLocalPosition( m_pTransform->GetWorldPosition() );
+		m_pTransform.SetLocalPosition( m_pTransform.GetWorldPosition() );
 	}
 	else 
 	{
 		if (keepWorldPosition)
 		{
-			m_pTransform->SetLocalPosition( m_pTransform->GetLocalPosition() - pParent->m_pTransform->GetWorldPosition() );
+			m_pTransform.SetLocalPosition( m_pTransform.GetLocalPosition() - m_pTransform.GetWorldPosition() );
 		}
-		m_pTransform->SetDirtyFlag();
+		m_pTransform.SetDirtyFlag();
 		if (m_pParent)m_pParent->RemoveChild( this );
 		m_pParent = pParent;
 		if (m_pParent)m_pParent->AddChild( this );
