@@ -43,10 +43,10 @@ namespace dae
 
 		bool IsDestroyed();
 
-		Transform GetTransform() { return m_pTransform; };
+		std::shared_ptr<Transform> GetTransform() { return m_pTransform; };
 
 	private:
-		Transform m_pTransform{};
+		std::shared_ptr<Transform> m_pTransform{};
 		bool m_GameObjectDestroyed{ false };
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
