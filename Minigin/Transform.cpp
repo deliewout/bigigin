@@ -14,7 +14,7 @@ void dae::Transform::SetLocalPosition( const glm::vec2& Pos )
 	SetDirtyFlag();
 }
 
-void dae::Transform::SetLocalPosition( float x, float y )
+void dae::Transform::SetLocalPosition( const float x, const float y )
 {
 	return SetLocalPosition( glm::vec2{ x,y } );
 }
@@ -27,10 +27,11 @@ void dae::Transform::SetTransformParent( GameObject* pParent )
 void dae::Transform::SetDirtyFlag()
 {
 	m_IsDirtyFlag = true;
-	//for (const auto& child : m_pParent->GetChildren())
-	//{
-	//	child->GetTransform().SetDirtyFlag();
-	//}
+
+	for (auto& pChild : GetOwner()->GetChildren())
+	{
+		pChild->GetTransform()->SetDirtyFlag();
+	}
 }
 
 glm::vec2 dae::Transform::GetWorldPosition()

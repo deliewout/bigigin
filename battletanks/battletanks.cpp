@@ -119,7 +119,7 @@ void test()
 			}
 
 			// Set the position of the block
-			go->SetPosition( startX + static_cast<float>(col) * blockSize, startY + static_cast<float>(row) * blockSize );
+			go->GetTransform()->SetLocalPosition( startX + static_cast<float>(col) * blockSize, startY + static_cast<float>(row) * blockSize );
 			scene.Add( go );
 		}
 	}
@@ -128,7 +128,7 @@ void test()
 	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "logo.tga" );
 	newTexture = go->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
-	go->SetPosition( 216, 180 );
+	go->GetTransform()->SetLocalPosition( 216, 180 );
 	scene.Add( go );
 
 
@@ -139,7 +139,7 @@ void test()
 	text = go->AddComponent<dae::TextObject>();
 	text->SetFont( refont );
 	text->SetText( "Programming 4 Assignment" );
-	go->SetPosition( 80, 20 );
+	go->GetTransform()->SetLocalPosition( 80, 20 );
 	scene.Add( go );
 
 	//go = std::make_shared<dae::GameObject>();
@@ -153,7 +153,7 @@ void test()
 	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "sprites/RedTank.png" );
 	newTexture = go->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
-	go->SetPosition( 300, 300 );
+	go->GetTransform()->SetLocalPosition( 300, 300 );
 	scene.Add( go );
 
 }

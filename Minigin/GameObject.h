@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "Transform.h"
-#include<string>
+#include <string>
 #include "Component.h"
 #include <vector>
 
@@ -17,7 +17,7 @@ namespace dae
 		void FixedUpdate( float  );
 		void Render() const;
 
-		void SetPosition(float x, float y);
+		//void SetPosition(float x, float y);
 
 		void SetParent( GameObject* parent, bool keepWorldPosition );
 		GameObject* GetParent() const { return m_pParent; };
@@ -43,12 +43,12 @@ namespace dae
 
 		bool IsDestroyed();
 
-		//std::shared_ptr<Transform> GetTransform() { return m_pTransform; };
-		Transform GetTransform() { return m_pTransform; };
+		Transform* GetTransform() { return m_pTransform.get(); };
+		//Transform GetTransform() { return m_pTransform; };
 
 	private:
-		//std::shared_ptr<Transform> m_pTransform{};
-		Transform m_pTransform{};
+		std::unique_ptr<Transform> m_pTransform{};
+		//Transform m_pTransform{};
 		bool m_GameObjectDestroyed{ false };
 
 		std::vector<std::unique_ptr<Component>> m_pComponents;
@@ -68,10 +68,20 @@ namespace dae
 		if (HasComponent<T>() == false)
 		{
 			auto pComponent = std::make_unique<T>( this );
-			m_pComponents.emplace_back( std::move( pComponent ) );
-
-			return  dynamic_cast<T*>(m_pComponents.back().get());
+			T* pComponentPtr{ pComponent.get() };
+			if constexpr(std::is_same<T, Transform>())
+			{
+				m_pTransform = std::move(pComponent);
+			}
+			else
+			{
+				m_pComponents.emplace_back( std::move( pComponent ) );
+			}
+			
+			
+			return  pComponentPtr;
 		}
+		
 		return nullptr;
 	}
 
