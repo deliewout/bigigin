@@ -33,7 +33,7 @@ void dae::InputManager::BindKeyboardAction( SDL_Scancode button, KeyStates keySt
 
 void dae::InputManager::BindGamePadAction( int controllerIndex, GamepadStates button, KeyStates keyState, std::unique_ptr<Command> action )
 {
-	m_GamepadCommands.push_back( std::make_unique<GamePadCommand>( controllerIndex, button, keyState, action ) );
+	m_GamepadCommands.push_back( std::make_unique<GamePadCommand>( controllerIndex, button, keyState, std::move(action) ) );
 }
 
 void dae::InputManager::ProcessActions()
