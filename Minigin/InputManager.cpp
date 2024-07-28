@@ -26,21 +26,14 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::BindKeyBoardAction( SDL_Scancode Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
+void dae::InputManager::BindKeyboardAction( SDL_Scancode button, KeyStates keyState, std::unique_ptr<Command> action )
 {
-	//temp fix
-	Button;
-	KeyState;
-	Action;
+	m_KeyboardCommands.push_back( std::make_unique<KeyboardCommand>( button, keyState, std::move( action ) ) );
 }
 
-void dae::InputManager::BindGamePadAction( int ControllerIndex, GamepadStates Button, KeyStates KeyState, std::unique_ptr<dae::Command> Action )
+void dae::InputManager::BindGamePadAction( int controllerIndex, GamepadStates button, KeyStates keyState, std::unique_ptr<Command> action )
 {
-	//temp fix
-	ControllerIndex;
-	Button;
-	KeyState;
-	Action;
+	m_GamepadCommands.push_back( std::make_unique<GamePadCommand>( controllerIndex, button, keyState, action ) );
 }
 
 void dae::InputManager::ProcessActions()

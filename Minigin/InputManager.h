@@ -43,13 +43,37 @@ namespace dae
 			pressed,
 		};
 
-		//vectors of commands depending on which input device is used
-		std::vector<dae::Command> m_KeyboardCommands;
-		std::vector<std::vector<dae::Command>> m_GamepadCommands;
+
 
 		//functions to bind a button press to a certain command
-		void BindKeyBoardAction(SDL_Scancode Button,  KeyStates KeyState, std::unique_ptr<dae::Command> Action );
-		void BindGamePadAction(int ControllerIndex, GamepadStates Button,  KeyStates KeyState, std::unique_ptr<dae::Command> Action );
+		void BindKeyboardAction(SDL_Scancode button,  KeyStates keyState, std::unique_ptr<Command> action );
+		void BindGamePadAction(int controllerIndex, GamepadStates button,  KeyStates keyState, std::unique_ptr<Command> action );
 		void ProcessActions();
+
+		struct KeyboardCommand final
+		{
+			KeyboardCommand( SDL_Scancode button, KeyStates keyState, std::unique_ptr<Command> action )
+				:Button{ button }, KeyState{ keyState }, Action{ std::move( action ) }
+			{}
+
+			SDL_Scancode Button;
+			KeyStates KeyState;
+			std::unique_ptr<Command> Action;
+		};
+		struct GamePadCommand final
+		{
+			GamePadCommand( int controllerIndex, GamepadStates button, KeyStates keyState, std::unique_ptr<Command> action )
+				:ControllerIdx{ controllerIndex },Button {button}, KeyState{ keyState }, Action{ std::move( action ) }
+			{}
+
+			int ControllerIdx;
+			GamepadStates Button;
+			KeyStates KeyState;
+			std::unique_ptr<Command> Action;
+		};
+	private:
+		//vectors of commands depending on which input device is used
+		std::vector<std::unique_ptr<KeyboardCommand>> m_KeyboardCommands;
+		std::vector<std::unique_ptr<GamePadCommand>> m_GamepadCommands;
 	};
 }
