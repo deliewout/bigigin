@@ -11,7 +11,7 @@ dae::KeyboardInput::KeyboardInput()
 
 void dae::KeyboardInput::Update()
 {
-	std::vector<int> currenState( SDL_NUM_SCANCODES );
+	std::vector<Uint8> currenState( SDL_NUM_SCANCODES );
 
 	auto keyboardState = SDL_GetKeyboardState( nullptr );
 

@@ -10,11 +10,12 @@
 
 namespace dae
 {
-	//class Command;
+	
 	class KeyboardInput;
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+		InputManager();
 		bool ProcessInput();
 
 		//all buttons for gamepad (without thumbs)
@@ -46,8 +47,8 @@ namespace dae
 
 
 		//functions to bind a button press to a certain command
-		void BindKeyboardAction(SDL_Scancode button,  KeyStates keyState, std::unique_ptr<Command> action );
-		void BindGamePadAction(int controllerIndex, GamepadStates button,  KeyStates keyState, std::unique_ptr<Command> action );
+		void BindKeyboardCommand(SDL_Scancode button,  KeyStates keyState, std::unique_ptr<Command> action );
+		void BindGamePadCommand(int controllerIndex, GamepadStates button,  KeyStates keyState, std::unique_ptr<Command> action );
 		void ProcessActions();
 
 		struct KeyboardCommand final
@@ -75,5 +76,10 @@ namespace dae
 		//vectors of commands depending on which input device is used
 		std::vector<std::unique_ptr<KeyboardCommand>> m_KeyboardCommands;
 		std::vector<std::unique_ptr<GamePadCommand>> m_GamepadCommands;
+		std::unique_ptr<KeyboardInput> m_Keyboard;
+		std::vector<std::unique_ptr<ControllerInput>> m_Gamepads;
+
+
+		void HandleCommands();
 	};
 }

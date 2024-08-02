@@ -17,6 +17,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "InputManager.h"
+#include "MoveCommand.h"
 
 std::vector<std::vector<int>> grid{};
 
@@ -56,8 +58,10 @@ void LoadLevelFile()
 void test()
 {
 	dae::ServiceLocator::RegisterSoundSystem( std::make_unique<dae::SDLSoundSystem>() );
+	auto& input=dae::InputManager::GetInstance();
+	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::down, std::unique_ptr<dae::MoveCommand>() );
 	auto& scene = dae::SceneManager::GetInstance().CreateScene( "Demo" );
-	
+
 
 	auto go = std::make_shared<dae::GameObject>();
 

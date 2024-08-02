@@ -16,15 +16,15 @@ namespace dae
 
 		void Update();
 
-		bool IsButtonPressed( SDL_Scancode button ) { return m_Down[button]; };
+		bool IsButtonDown( SDL_Scancode button ) { return m_Down[button]; };
 		bool IsButtonReleased( SDL_Scancode button ) { return m_Up[button]; };
-		bool IsButtonHeldDown( SDL_Scancode button ) { return m_Pressed[button]; };
+		bool IsButtonPressed( SDL_Scancode button ) { return m_Pressed[button]; };
 
 	private:
-		std::vector<int> m_Down;
-		std::vector<int> m_Up;
-		std::vector<int> m_Pressed;
-		std::vector<int> m_PreviousState;
+		std::vector<Uint8> m_Down;
+		std::vector<Uint8> m_Up;
+		std::vector<Uint8> m_Pressed;
+		std::vector<Uint8> m_PreviousState;
 
 	};
 }
