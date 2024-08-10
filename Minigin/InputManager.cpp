@@ -1,12 +1,17 @@
-#include <SDL.h>
+
 #include "InputManager.h"
 #include <backends/imgui_impl_sdl2.h>
+#include <iostream>
+
 
 
 
 dae::InputManager::InputManager()
 {
 	m_Keyboard = std::make_unique<KeyboardInput>();
+	//m_Gamepads.resize( 4 );
+	for (int i{ 0 }; i < 4; ++i)
+		m_Gamepads.push_back( std::make_unique<dae::ControllerInput>( i ) );
 }
 
 bool dae::InputManager::ProcessInput()
@@ -30,9 +35,11 @@ bool dae::InputManager::ProcessInput()
 	m_Keyboard->Update();
 	for (auto& currentGamepad : m_Gamepads)
 	{
+		if (currentGamepad == nullptr)
+			continue;
 		currentGamepad->Update();
 	}
-	//HandleCommands();
+	HandleCommands();
 	return true;
 }
 
@@ -43,6 +50,7 @@ void dae::InputManager::BindKeyboardCommand( SDL_Scancode button, KeyStates keyS
 
 void dae::InputManager::BindGamePadCommand( int controllerIndex, GamepadStates button, KeyStates keyState, std::unique_ptr<Command> action )
 {
+
 	m_GamepadCommands.push_back( std::make_unique<GamePadCommand>( controllerIndex, button, keyState, std::move(action) ) );
 }
 
@@ -72,6 +80,8 @@ void dae::InputManager::HandleCommands()
 			break;
 		}
 	}
+	//if (m_Gamepads.size() == 0)
+		//return;
 	for (auto& command : m_GamepadCommands)
 	{
 		switch (command->KeyState)
@@ -82,7 +92,11 @@ void dae::InputManager::HandleCommands()
 			break;
 		case KeyStates::down:
 			if (m_Gamepads[command->ControllerIdx]->IsButtonDown( static_cast<unsigned int>(command->Button) ))
+			{
 				command->Action->Execute();
+				//std::cout << "pressed\n";
+			}
+				
 			break;
 		case KeyStates::pressed:
 			if (m_Gamepads[command->ControllerIdx]->IsButtonPressed( static_cast<unsigned int>(command->Button) ))

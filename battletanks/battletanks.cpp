@@ -19,20 +19,20 @@
 #include <iostream>
 #include "InputManager.h"
 #include "MoveCommand.h"
+#include <glm/glm.hpp>
 
 std::vector<std::vector<int>> grid{};
 
 enum class BlockTypes
 {
-	levelvoid,
 	wall,
 	path,
-	teleport
+	brick
 
 };
 void LoadLevelFile()
 {
-	std::ifstream file( "../Data/levels/LevelLayout0.csv" );
+	std::ifstream file( "../Data/levels/LevelLayout1.csv" );
 	if (!file.is_open())
 	{
 		std::cout << "error opening the file" << "\n";
@@ -59,7 +59,9 @@ void test()
 {
 	dae::ServiceLocator::RegisterSoundSystem( std::make_unique<dae::SDLSoundSystem>() );
 	auto& input=dae::InputManager::GetInstance();
-	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::down, std::unique_ptr<dae::MoveCommand>() );
+	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::down, std::make_unique<dae::MoveCommand>(glm::vec2{100,100},20.0f));
+	
+	input.BindGamePadCommand(0, dae::InputManager::GamepadStates::Dpad_B, dae::InputManager::KeyStates::down, std::make_unique<dae::MoveCommand>( glm::vec2{ 100,100 }, 20.0f ) );
 	auto& scene = dae::SceneManager::GetInstance().CreateScene( "Demo" );
 
 
@@ -76,17 +78,16 @@ void test()
 	scene.Add( go );
 
 	//load the diffrent tile texture
-	auto voidTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/void.png" );
 	auto wallTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/wall.png" );
 	auto pathTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/path.png" );
-	auto teleportTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/teleport.png" );
+	auto brickTexture = dae::ResourceManager::GetInstance().LoadTexture( "levels/BrickWall.png" );
 	
 	//load the level layout
 	LoadLevelFile();
 
-	const int blockSize = 8;
+	const int blockSize = 20;
 	int startX = 0;
-	int startY = 0;
+	int startY = 100;
 
 	// Draw the blocks based on the grid data
 	for (size_t row = 0; row < grid.size(); ++row) {
@@ -105,17 +106,14 @@ void test()
 
 			// Set the texture based on block type
 			switch (static_cast<BlockTypes>(grid[row][col])) {
-			case BlockTypes::levelvoid:
-				renderComponent->SetTexture( voidTexture );
-				break;
 			case BlockTypes::wall:
 				renderComponent->SetTexture( wallTexture );
 				break;
 			case BlockTypes::path:
 				renderComponent->SetTexture( pathTexture );
 				break;
-			case BlockTypes::teleport:
-				renderComponent->SetTexture( teleportTexture );
+			case BlockTypes::brick:
+				renderComponent->SetTexture( brickTexture );
 				break;
 			default:
 				std::cout << "Unknown block type\n";
@@ -151,6 +149,8 @@ void test()
 	//go->AddComponent<dae::FPSComponent>();
 	//const auto pText{ go->AddComponent<dae::TextObject>() };
 	//pText->SetFont( font );
+	//go->GetTransform()->SetLocalPosition( 400, 300 );
+	//scene.Add( go );
 	//pText->SetColor( 255, 255, 0 );
 
 	go = std::make_shared<dae::GameObject>();

@@ -11,7 +11,7 @@ namespace dae
 	class ControllerInput
 	{
 	public:
-		ControllerInput() = default;
+		ControllerInput(int index) ;
 		~ControllerInput() = default;
 
 		ControllerInput( const ControllerInput& other ) = delete;

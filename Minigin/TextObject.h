@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Transform.h"
+#include "RenderComponent.h"
 
 namespace dae
 {
@@ -30,8 +31,10 @@ namespace dae
 	private:
 		bool m_needsUpdate;
 		std::string m_text;
-		std::shared_ptr<Transform> m_transform{};
+		std::shared_ptr<Transform> m_transform;
 		std::shared_ptr<Font> m_font;
-		std::shared_ptr<Texture2D> m_textTexture;
+		std::shared_ptr<Texture2D> m_textTexture{};
+		std::unique_ptr<dae::RenderComponent> m_pOwner{GetOwner()->GetComponent<dae::RenderComponent>()};
+
 	};
 }

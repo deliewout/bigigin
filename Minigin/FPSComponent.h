@@ -1,5 +1,6 @@
 #pragma once
 #include "TextObject.h"
+#include "GameObject.h"
 namespace dae
 {
 	class FPSComponent final : public Component
@@ -7,7 +8,7 @@ namespace dae
 	public:
 		void Update(float elapesedSec ) override;
 
-		FPSComponent() = default;
+		FPSComponent( GameObject* pOwner ) :Component{ pOwner } {};
 		~FPSComponent() = default;
 		FPSComponent( const FPSComponent& other ) = delete;
 		FPSComponent& operator=( const FPSComponent& rhs ) = delete;

@@ -4,11 +4,11 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
-#include "Transform.h"
+
 
 
 dae::TextObject::TextObject( GameObject* pOwner )
-	:dae::Component{pOwner}, m_needsUpdate( true )
+	:dae::Component{pOwner}, m_needsUpdate( true ),m_transform(GetOwner()->GetComponent<dae::Transform>())
 {
 }
 //dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
@@ -32,6 +32,7 @@ void dae::TextObject::Update( float  )
 		}
 		SDL_FreeSurface(surf);
 		m_textTexture = std::make_shared<Texture2D>(texture);
+		//m_pOwner->Render( m_transform->GetLocalPosition() );
 		m_needsUpdate = false;
 	}
 }

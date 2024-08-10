@@ -6,6 +6,7 @@
 #include <memory>
 #include <SDL_scancode.h>
 #include "Command.h"
+#include <SDL.h>
 
 
 namespace dae
