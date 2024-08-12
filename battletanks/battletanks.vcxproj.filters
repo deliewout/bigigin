@@ -21,10 +21,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RecogniserState.cpp">
+    <ClCompile Include="BaseState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseState.cpp">
+    <ClCompile Include="PlayerMoveCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RecogniserState.h">
+    <ClInclude Include="BaseState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BaseState.h">
+    <ClInclude Include="PlayerMoveCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

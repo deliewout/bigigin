@@ -19,6 +19,12 @@ void dae::Transform::SetLocalPosition( const float x, const float y )
 	return SetLocalPosition( glm::vec2{ x,y } );
 }
 
+void dae::Transform::MoveLocalPosition( const glm::vec2& Pos )
+{
+	m_LocalPosition += Pos;
+	SetDirtyFlag();
+}
+
 void dae::Transform::SetTransformParent( GameObject* pParent )
 {
 	m_pParent = pParent;

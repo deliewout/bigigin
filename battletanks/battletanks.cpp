@@ -19,9 +19,11 @@
 #include <iostream>
 #include "InputManager.h"
 #include "MoveCommand.h"
+#include "PlayerMoveCommand.h"
 #include <glm/glm.hpp>
 
 std::vector<std::vector<int>> grid{};
+const float movementspeed{ 1.0f };
 
 enum class BlockTypes
 {
@@ -59,9 +61,7 @@ void test()
 {
 	dae::ServiceLocator::RegisterSoundSystem( std::make_unique<dae::SDLSoundSystem>() );
 	auto& input=dae::InputManager::GetInstance();
-	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::down, std::make_unique<dae::MoveCommand>(glm::vec2{100,100},20.0f));
 	
-	input.BindGamePadCommand(0, dae::InputManager::GamepadStates::Dpad_B, dae::InputManager::KeyStates::down, std::make_unique<dae::MoveCommand>( glm::vec2{ 100,100 }, 20.0f ) );
 	auto& scene = dae::SceneManager::GetInstance().CreateScene( "Demo" );
 
 
@@ -130,7 +130,7 @@ void test()
 	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "logo.tga" );
 	newTexture = go->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
-	go->GetTransform()->SetLocalPosition( 216, 180 );
+	go->GetTransform()->SetLocalPosition( 216, 360 );
 	scene.Add( go );
 
 
@@ -154,11 +154,24 @@ void test()
 	//pText->SetColor( 255, 255, 0 );
 
 	go = std::make_shared<dae::GameObject>();
-	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "sprites/RedTank.png" );
+	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "sprites/player.png" );
 	newTexture = go->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
-	go->GetTransform()->SetLocalPosition( 300, 300 );
+	go->GetTransform()->SetLocalPosition( 20, 200 );
 	scene.Add( go );
+
+	//bind keyboard keys for moving
+	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 0,-1 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_S, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 0,1 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_A, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ -1,0 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_D, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 1,0 }, movementspeed ) );
+	
+	//bind gamepad keys for moving
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Up, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 0,-1 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Down, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 0,1 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Left, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ -1,0 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Right, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 1,0 }, movementspeed ) );
+	
 
 }
 int main( int, char* [] ) {
