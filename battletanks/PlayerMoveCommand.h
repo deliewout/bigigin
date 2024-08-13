@@ -18,7 +18,7 @@ namespace dae
 	private:
 		std::shared_ptr<GameObject> m_pPlayer;
 		const glm::vec2 m_Direction;
-		float m_Speed;
+		const float m_Speed;
 		
 	};
 }

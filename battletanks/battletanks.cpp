@@ -20,10 +20,12 @@
 #include "InputManager.h"
 #include "MoveCommand.h"
 #include "PlayerMoveCommand.h"
+#include "PlaceBombCommand.h"
+#include "BombComponent.h"
 #include <glm/glm.hpp>
 
 std::vector<std::vector<int>> grid{};
-const float movementspeed{ 1.0f };
+
 
 enum class BlockTypes
 {
@@ -153,26 +155,41 @@ void test()
 	//scene.Add( go );
 	//pText->SetColor( 255, 255, 0 );
 
-	go = std::make_shared<dae::GameObject>();
+	auto Playergo = std::make_shared<dae::GameObject>();
 	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "sprites/player.png" );
-	newTexture = go->AddComponent<dae::RenderComponent>();
+	newTexture = Playergo->AddComponent<dae::RenderComponent>();
 	newTexture->SetTexture( createTexture );
-	go->GetTransform()->SetLocalPosition( 20, 200 );
-	scene.Add( go );
+	Playergo->GetTransform()->SetLocalPosition( 20, 200 );
+	scene.Add( Playergo );
+
+	const float movementspeed{ 1.0f };
 
 	//bind keyboard keys for moving
-	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 0,-1 }, movementspeed ) );
-	input.BindKeyboardCommand( SDL_SCANCODE_S, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 0,1 }, movementspeed ) );
-	input.BindKeyboardCommand( SDL_SCANCODE_A, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ -1,0 }, movementspeed ) );
-	input.BindKeyboardCommand( SDL_SCANCODE_D, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>(go, glm::vec2{ 1,0 }, movementspeed ) );
-	
-	//bind gamepad keys for moving
-	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Up, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 0,-1 }, movementspeed ) );
-	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Down, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 0,1 }, movementspeed ) );
-	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Left, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ -1,0 }, movementspeed ) );
-	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Right, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( go, glm::vec2{ 1,0 }, movementspeed ) );
-	
+	input.BindKeyboardCommand( SDL_SCANCODE_W, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 0,-1 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_S, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 0,1 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_A, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ -1,0 }, movementspeed ) );
+	input.BindKeyboardCommand( SDL_SCANCODE_D, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 1,0 }, movementspeed ) );
 
+	//bind gamepad keys for moving
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Up, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 0,-1 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Down, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 0,1 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Left, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ -1,0 }, movementspeed ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_Right, dae::InputManager::KeyStates::pressed, std::make_unique<dae::PlayerMoveCommand>( Playergo, glm::vec2{ 1,0 }, movementspeed ) );
+
+	auto bombGo = std::make_shared<dae::GameObject>();
+	createTexture = dae::ResourceManager::GetInstance().LoadTexture( "sprites/bomb.png" );
+	newTexture = bombGo->AddComponent<dae::RenderComponent>();
+	newTexture->SetTexture( createTexture );
+	bombGo->AddComponent<dae::BombComponent>();
+	//go->GetTransform()->SetLocalPosition( 20, 200 );
+	
+	//binding for bomb placement
+	input.BindKeyboardCommand( SDL_SCANCODE_SPACE, dae::InputManager::KeyStates::down, std::make_unique<dae::PlaceBombCommand>( Playergo, bombGo ) );
+	input.BindGamePadCommand( 0, dae::InputManager::GamepadStates::Dpad_B, dae::InputManager::KeyStates::down, std::make_unique<dae::PlaceBombCommand>( Playergo, bombGo ) );
+	scene.Add( bombGo );
+
+	std::cout << "use WASD(keyboard)/Dpad(controller) to move\n";
+	std::cout << "use spacebar(keyboard)/B(controller) to place bomb\n";
 }
 int main( int, char* [] ) {
 	dae::Minigin engine("../Data/");
